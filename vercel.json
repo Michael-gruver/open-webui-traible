@@ -1,20 +1,24 @@
 {
+    "version": 2,
     "builds": [
       {
         "src": "package.json",
-        "use": "@vercel/static-build",
+        "use": "@vercel/node"
+      },
+      {
+        "src": "package.json",
+        "use": "@vercel/svelte",
         "config": {
-          "distDir": "build"
+          "buildCommand": "npm run build",
+          "outputDirectory": "build"
         }
       }
     ],
     "routes": [
-      {
-        "src": "/(.*)",
-        "dest": "/index.html"
-      }
+      { "handle": "filesystem" },
+      { "src": "/.*", "dest": "/index.html" }
     ],
-    "buildCommand": "npm run build",
-    "outputDirectory": "build",
-    "framework": "svelte"
+    "env": {
+      "NODE_ENV": "production"
+    }
   }
